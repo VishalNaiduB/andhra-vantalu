@@ -20,7 +20,7 @@ export default async function ArchivePage() {
       </div>
       <div className="kolam-divider" />
       <div className="space-y-8">
-        {stories.map((story) => {
+        {stories.map((story: any) => {
           const imageUrl = story.hero_image ? urlFor(story.hero_image).width(600).height(300).url() : null;
           return (
             <article key={story._id} className="parchment">
