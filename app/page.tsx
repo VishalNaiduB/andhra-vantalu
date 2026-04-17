@@ -1,65 +1,107 @@
-import Image from "next/image";
+import Link from "next/link";
+import { sanityClient } from "@/lib/sanity/client";
+import { featuredRecipesQuery, recipesByMealTypeQuery } from "@/lib/sanity/queries";
+import { RecipeGrid } from "@/components/recipe/RecipeGrid";
+import type { RecipeCard } from "@/lib/sanity/types";
 
-export default function Home() {
+const quickFilters = [
+  { label: "Breakfast", value: "breakfast" },
+  { label: "Lunch", value: "lunch" },
+  { label: "Dinner", value: "dinner" },
+  { label: "Snacks", value: "snacks" },
+  { label: "Sweets", value: "sweets" },
+];
+
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  const featured: RecipeCard[] = await sanityClient.fetch(featuredRecipesQuery);
+  const breakfastRecipes: RecipeCard[] = await sanityClient.fetch(
+    recipesByMealTypeQuery,
+    { mealType: "breakfast" }
+  );
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="space-y-8">
+      {/* Hero */}
+      <section className="rounded-xl bg-gradient-to-br from-turmeric-100 to-cream-200 p-6 text-center">
+        <h1 className="font-heading text-3xl font-bold text-tamarind-500">
+          Andhra Vantalu
+        </h1>
+        <p className="font-telugu mt-1 text-lg text-brass-600">
+          ఆంధ్ర వంటలు — అమ్మ చేతి వంట
+        </p>
+        <p className="mt-2 text-sm text-tamarind-300">
+          Authentic recipes from the heart of Andhra Pradesh
+        </p>
+      </section>
+
+      {/* Quick Filters */}
+      <section>
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {quickFilters.map((filter) => (
+            <Link
+              key={filter.value}
+              href={`/browse?meal=${filter.value}`}
+              className="shrink-0 rounded-full border border-brass-200 bg-white px-4 py-2 text-sm font-medium text-tamarind-400 transition-colors hover:border-turmeric-400 hover:bg-turmeric-50"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              {filter.label}
+            </Link>
+          ))}
+          <Link
+            href="/browse?healthy=true"
+            className="shrink-0 rounded-full border border-curry-leaf-200 bg-curry-leaf-50 px-4 py-2 text-sm font-medium text-curry-leaf-700 transition-colors hover:bg-curry-leaf-100"
+          >
+            🌿 Healthy
+          </Link>
+        </div>
+      </section>
+
+      {/* Featured */}
+      {featured.length > 0 && (
+        <section>
+          <h2 className="mb-3 font-heading text-xl text-tamarind-500">
+            Featured Recipes
+          </h2>
+          <div className="kolam-divider" />
+          <RecipeGrid recipes={featured} />
+        </section>
+      )}
+
+      {/* Breakfast Picks */}
+      {breakfastRecipes.length > 0 && (
+        <section>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-heading text-xl text-tamarind-500">
+              Breakfast / టిఫిన్
+            </h2>
+            <Link
+              href="/browse?meal=breakfast"
+              className="text-sm text-curry-red-500 hover:underline"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              See all →
+            </Link>
+          </div>
+          <RecipeGrid recipes={breakfastRecipes.slice(0, 4)} />
+        </section>
+      )}
+
+      {/* Cultural Archive CTA */}
+      <section className="parchment text-center">
+        <h2 className="font-heading text-xl text-tamarind-500">
+          Stories Behind Our Food
+        </h2>
+        <p className="mt-2 text-sm text-tamarind-300">
+          Every dish has a story — from village festivals to grandmother&apos;s
+          kitchens. Discover the heritage behind Andhra cuisine.
+        </p>
+        <Link
+          href="/archive"
+          className="mt-4 inline-block rounded-lg bg-tamarind-500 px-6 py-2 text-sm font-medium text-cream-100 transition-colors hover:bg-tamarind-600"
+        >
+          Explore the Archive
+        </Link>
+      </section>
     </div>
   );
 }
