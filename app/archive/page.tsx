@@ -6,7 +6,7 @@ import { culturalStoriesQuery } from "@/lib/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { REGION_LABELS } from "@/lib/constants";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function ArchivePage() {
   const stories = await sanityClient.fetch(culturalStoriesQuery);

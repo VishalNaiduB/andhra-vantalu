@@ -5,7 +5,7 @@ import { RecipeGrid } from "@/components/recipe/RecipeGrid";
 import { FilterPanel } from "@/components/browse/FilterPanel";
 import type { RecipeCard } from "@/lib/sanity/types";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 type Props = {
   searchParams: Promise<{

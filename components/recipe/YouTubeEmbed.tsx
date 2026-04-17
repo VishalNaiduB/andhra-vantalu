@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function getYouTubeId(url: string): string | null {
   const match = url.match(
-    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([^&?#]+)/
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/|watch\?v=))([^&?#]+)/
   );
   return match?.[1] ?? null;
 }
