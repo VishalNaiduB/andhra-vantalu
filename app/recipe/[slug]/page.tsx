@@ -13,6 +13,7 @@ import { ShareButton } from "@/components/recipe/ShareButton";
 import { RecipeGrid } from "@/components/recipe/RecipeGrid";
 import { REGION_LABELS, OCCASION_LABELS, DIFFICULTY_LABELS } from "@/lib/constants";
 import type { Recipe } from "@/lib/sanity/types";
+import { CommunitySection } from "@/components/community/CommunitySection";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -144,7 +145,7 @@ export default async function RecipeDetailPage({ params }: Props) {
         </section>
       )}
 
-      <div id="community" />
+      <CommunitySection slug={recipe.slug.current} />
 
       {recipe.related_recipes && recipe.related_recipes.length > 0 && (
         <section>
