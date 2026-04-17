@@ -1,26 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Noto+Serif+Telugu:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FEFCF7;
+  --foreground: #4A2C17;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Color Palette */
+  /* Turmeric shades (primary yellow) */
+  --color-turmeric-50: #FFF9E6;
+  --color-turmeric-100: #FFF0BF;
+  --color-turmeric-200: #FFE599;
+  --color-turmeric-300: #FFD966;
+  --color-turmeric-400: #FFCC33;
+  --color-turmeric-500: #D4A017;
+  --color-turmeric-600: #B8860B;
+  --color-turmeric-700: #8B6914;
+  --color-turmeric-800: #5C4A0E;
+  --color-turmeric-900: #2E2507;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Tamarind shades (dark brown) */
+  --color-tamarind-50: #F5EDE8;
+  --color-tamarind-100: #E0CCC0;
+  --color-tamarind-200: #C4A089;
+  --color-tamarind-300: #8B5E3C;
+  --color-tamarind-400: #6B4226;
+  --color-tamarind-500: #4A2C17;
+  --color-tamarind-600: #3D2412;
+  --color-tamarind-700: #2F1B0E;
+  --color-tamarind-800: #221309;
+  --color-tamarind-900: #150C05;
+
+  /* Curry-red shades */
+  --color-curry-red-50: #FDECE6;
+  --color-curry-red-100: #F9C9B8;
+  --color-curry-red-200: #E8916B;
+  --color-curry-red-300: #D16835;
+  --color-curry-red-400: #C25422;
+  --color-curry-red-500: #B5451B;
+  --color-curry-red-600: #963A17;
+  --color-curry-red-700: #772E12;
+  --color-curry-red-800: #58220E;
+  --color-curry-red-900: #3A1709;
+
+  /* Curry-leaf shades (green) */
+  --color-curry-leaf-50: #E8F5E8;
+  --color-curry-leaf-100: #C2E2C2;
+  --color-curry-leaf-200: #7BBF7B;
+  --color-curry-leaf-300: #4A9E4A;
+  --color-curry-leaf-400: #38823A;
+  --color-curry-leaf-500: #2D6A2D;
+  --color-curry-leaf-600: #255725;
+  --color-curry-leaf-700: #1D441D;
+  --color-curry-leaf-800: #153115;
+  --color-curry-leaf-900: #0D1F0D;
+
+  /* Brass shades */
+  --color-brass-50: #F8F2E8;
+  --color-brass-100: #ECDCBE;
+  --color-brass-200: #D4BC8A;
+  --color-brass-300: #C5A46B;
+  --color-brass-400: #B08D57;
+  --color-brass-500: #9A7B4A;
+  --color-brass-600: #7D643C;
+  --color-brass-700: #604D2E;
+  --color-brass-800: #433620;
+  --color-brass-900: #261F12;
+
+  /* Cream shades */
+  --color-cream-50: #FEFCF7;
+  --color-cream-100: #FAF3E0;
+  --color-cream-200: #F5E6C8;
+  --color-cream-300: #EDD9AF;
+  --color-cream-400: #E5CC96;
+  --color-cream-500: #DDBF7D;
+
+  /* Font Families */
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-telugu: "Noto Serif Telugu", serif;
+  --font-telugu-body: "Noto Sans Telugu", sans-serif;
+
+  /* Default sans font */
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Playfair Display", Georgia, serif;
+  color: var(--foreground);
+}
+
+/* Parchment: cultural story sections */
+.parchment {
+  background: #f5eed6;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3C/filter%3E%3Crect width='100' height='100' fill='%23f5eed6' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  border-left: 3px solid #9A7B4A;
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+/* Kolam divider: decorative line using repeating gradient */
+.kolam-divider {
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    #9A7B4A 0px,
+    #9A7B4A 8px,
+    #D4A017 8px,
+    #D4A017 16px,
+    transparent 16px,
+    transparent 24px
+  );
+}
+
+/* Diet dot: vegetarian */
+.diet-dot-veg {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #2d6a2d;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diet-dot-veg::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #2d6a2d;
+  border-radius: 50%;
+}
+
+/* Diet dot: non-vegetarian */
+.diet-dot-nonveg {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #b5451b;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diet-dot-nonveg::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: #b5451b;
+  border-radius: 50%;
+}
+
+/* Mobile safe area support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

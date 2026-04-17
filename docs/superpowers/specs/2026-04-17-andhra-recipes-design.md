@@ -74,7 +74,7 @@ Sanity CMS                          Supabase
 |---|---|---|
 | `name_english` | string | e.g., "Pesarattu" |
 | `name_telugu` | string | e.g., "పెసరట్టు" |
-| `meal_type` | enum | Breakfast / Lunch / Snacks / Dinner / Sweets & Desserts |
+| `meal_type` | array (multi-select) | Breakfast / Lunch / Dinner / Snacks / Sweets & Desserts — most dishes tagged to both Lunch and Dinner; heavy feasts Lunch-only; lighter dishes Dinner-only |
 | `diet` | enum | Veg / Non-Veg |
 | `region` | enum | Coastal Andhra / Rayalaseema / North Andhra / Godavari Region |
 | `spice_level` | enum | Mild / Medium / Spicy / Extra Spicy / Kramp (not shown for Sweets) |
@@ -252,7 +252,7 @@ For each recipe include:
   "_type": "recipe",
   "name_english": "",
   "name_telugu": "",
-  "meal_type": "breakfast|lunch|snacks|dinner|sweets",
+  "meal_type": ["breakfast|lunch|dinner|snacks|sweets"],  // array — tag multiple e.g. ["lunch","dinner"]
   "diet": "veg|nonveg",
   "region": "coastal-andhra|rayalaseema|north-andhra|godavari",
   "spice_level": "mild|medium|spicy|extra-spicy|kramp",
@@ -266,7 +266,10 @@ For each recipe include:
   "youtube_search_query": "search query to find a good YouTube video for this recipe"
 }
 
-Cover all major categories: breakfast, lunch, snacks, dinner, sweets. 
+Cover all major categories: breakfast, lunch, dinner, snacks, sweets. 
+meal_type is an array — tag most pappu/kura/pulusu dishes as ["lunch","dinner"]. 
+Tag heavy rice feasts (Bagara Rice, Pulihora) as ["lunch"] only. 
+Tag lighter dishes (Pesara Pappu with roti, Ragi Mudda, Majjiga Pulusu) as ["dinner"] only. 
 Include both veg and non-veg. Cover all four regions. 
 Include at least 80-90 recipes covering widely known Andhra dishes.
 Ensure cultural_story is rich, authentic, and specific — not generic food blog content.
@@ -278,6 +281,38 @@ sanity dataset import recipes.ndjson production
 ```
 
 4. **Add YouTube links** — use the `youtube_search_query` field to find and add real video URLs in Sanity Studio post-import.
+
+---
+
+## Social Sharing
+
+Sharing is a first-class feature — Telugu families share recipes primarily via WhatsApp.
+
+**Share button placement:**
+- Recipe detail page — prominent share button below the recipe title
+- Recipe cards — small share icon in the corner
+
+**Share mechanisms:**
+
+| Method | Implementation | Output |
+|---|---|---|
+| WhatsApp | `whatsapp://send?text=...` deep link | Pre-written message with dish name (Telugu + English), spice level, link, and "via Andhra Vantalu" |
+| Native share sheet | Web Share API (`navigator.share`) | Opens phone's native share drawer — covers Telegram, Messages, email, Instagram DM, etc. |
+| Instagram story card | Vercel OG image endpoint → download to camera roll | Styled recipe card: hero photo + Telugu name + English name + spice icons + site branding, ready to post as story |
+| Link copy | Clipboard API | Copies the recipe URL |
+
+**WhatsApp message format:**
+```
+పెసరట్టు (Pesarattu) 🌶🌶
+Coastal Andhra · Veg · Healthy
+
+Try this authentic recipe:
+https://andhra-vantalu.com/recipe/pesarattu
+
+via Andhra Vantalu 🍛
+```
+
+**OG meta tags** on every recipe page — when a link is pasted in WhatsApp, Instagram, or anywhere, it renders a rich preview with hero photo, dish name, region, and spice level.
 
 ---
 
