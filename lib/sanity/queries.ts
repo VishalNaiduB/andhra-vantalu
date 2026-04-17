@@ -66,8 +66,8 @@ export const allSlugsQuery = groq`
 
 export const searchRecipesQuery = groq`
   *[_type == "recipe" && (
-    name_english match $query + "*" ||
-    name_telugu match $query + "*"
+    name_english match $searchTerm + "*" ||
+    name_telugu match $searchTerm + "*"
   )] | order(name_english asc) {
     ${recipeCardFields}
   }
